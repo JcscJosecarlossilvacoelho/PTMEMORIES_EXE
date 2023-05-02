@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Definições</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    input[type=checkbox] {
+      margin-right: 10px;
+    }
+
+    button[type=submit] {
+      background-color: #0080ff;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Definições</h1>
+  <form id="settings-form">
+    <label for="mySetting">
+      <input type="checkbox" name="mySetting" id="mySetting">
+     Imprimir Automaticamente
+    </label>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <script>
+    const settings = require('electron-settings');
+
+    const form = document.querySelector('#settings-form');
+    const mySettingInput = document.querySelector('#mySetting');
+    console.log(settings.get('printOnDemand'))
+    mySettingInput.checked = settings.get('printOnDemand') === "1" ? true : false;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log(mySettingInput.checked)
+      const mySettingValue = mySettingInput.checked ? "1" : "0";
+      console.log(mySettingValue)
+      settings.set('printOnDemand', mySettingValue);
+
+      window.close();
+    });
+  </script>
+</body>
+</html>
